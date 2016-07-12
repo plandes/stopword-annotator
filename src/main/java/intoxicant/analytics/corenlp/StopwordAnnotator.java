@@ -17,8 +17,9 @@ import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.util.Pair;
 
 /**
- * User: jconwell
  * CoreNlp Annotator that checks if in coming token is a stopword
+ * @author John Conwell
+ * @author Paul Landes
  */
 public class StopwordAnnotator implements Annotator, CoreAnnotation<Pair<Boolean, Boolean>> {
 
