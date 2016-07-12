@@ -11,7 +11,8 @@
             <item name="Source" href="https://github.com/plandes/stopword-annotator"/>
         </links>
 
-        <menu name="Documentation">
+        <menu name="Quick Start">
+            <item name="Introduction" href="README.html"/>
             <item name="Javadoc" href="apidocs/index.html"/>
         </menu>
         <menu ref="reports"/>
