@@ -7,7 +7,9 @@
     <groupId>com.zensols</groupId>
     <artifactId>stopword-annotator</artifactId>
     <version>2.0</version>
-    <name>Stanford CoreNLP Stopword Annotator</name>
+    <name>Stopword Annotator</name>
+    <description>Stanford CoreNLP Stopword Annotator Pipeline Extension</description>
+    <url>https://github.com/plandes/stopword-annotator</url>
 
     <licenses>
         <license>
