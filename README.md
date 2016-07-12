@@ -1,12 +1,12 @@
-Stopword Plugin
-===============
+Stanford CoreNLP Stopword Plugin
+================================
 This is an extension to the
 [Stanford CoreNLP analytics pipeline](http://stanfordnlp.github.io/CoreNLP/) to
 check if a token's word and lemma value are stopwords.
 
 Obtaining
 ---------
-See [dependencies](https://plandes.github.io/stopword-annotator/dependencies.html)
+See [dependencies](https://plandes.github.io/stopword-annotator/dependency-info.html)
 
 Fork
 ----
