@@ -87,7 +87,7 @@ public class StopwordAnnotatorTest {
 
     /**
      * Test to validate that stopwords are properly annotated in the token list
-     * @throws Exception
+     * @throws Exception for lucene issues
      */
     @org.junit.Test
     public void testLuceneStopwordList() throws Exception {
@@ -123,7 +123,7 @@ public class StopwordAnnotatorTest {
 
     /**
      * Test to validate that the custom stopword list words
-     * @throws Exception
+     * @throws Exception for custom stopword list issues
      */
     @org.junit.Test
     public void testCustomStopwordList() throws Exception {
@@ -163,7 +163,7 @@ public class StopwordAnnotatorTest {
      * Test to validate that lemma values are checked against the (custom) stopword list
      *
      * NOTE: since we're loading the pos model into memory you'll need to set the VM memory size via '-Xms512m -Xmx1048m'
-     * @throws Exception
+     * @throws Exception for coreNLP issues
      */
     @org.junit.Test
     public void testStopwordsWithLemma() throws Exception {
