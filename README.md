@@ -1,22 +1,27 @@
-coreNlp
-=======
+Stopword Plugin
+===============
+This is an extension to the
+[Stanford CoreNLP analytics pipeline](http://stanfordnlp.github.io/CoreNLP/) to
+check if a token's word and lemma value are stopwords.
 
-This library is a growing set of extensions for and tools to work with [CoreNlp](http://www-nlp.stanford.edu/software/corenlp.shtml).
+Fork
+----
+This is originally John Conwell's
+[coreNlp](https://github.com/jconwell/coreNlp) extensions library.  I've
+updated the dependencies in the POM and only kept the stopword plugin and
+changed the packing so I can deploy it to Maven Central (under my account).
 
 Identifying Stopwords in CoreNlp
 --------------------------------
+By default, the StopwordAnnotator uses the built in Lucene stopword list, but
+you have to option to pass in a custom list of stopwords for it to use instead.
+You can also specify if the StopwordAnnotator should check the lemma of the
+token against the stopword list or not.
 
-CoreNlp doesnt have stopword identification built in, so I wrote an extension to its analytics pipeline (called Annatators) to check if a token's word and lemma value are stopwords.
+For examples of how to use the StopwordAnnotator, take a look at
+StopwordAnnotatorTest.java
 
-By default, the StopwordAnnotator uses the built in Lucene stopword list, but you have to option to pass in a custom list of stopwords for it to use instead.  You can also specify if the StopwordAnnotator should check the lemma of the token against the stopword list or not.
-
-For examples of how to use the StopwordAnnotator, takea look at StopwordAnnotatorTest.java 
-
-Friendly API for building a new StanfordCoreNLP instance
---------------------------------------------------------
-
-There is also a friendly api for configuring the analyzers you want to use when you create a new StanfordCoreNLP instance.  This beats building up a properly formatted string (in the correct order) of the list of analyzers CoreNlp will load.  There are also a set of static factory functions built around many common combinations of options.
-
-Again, check out the unit tests for examples on how to use them.
-
-NOTE: the unit tests actually create an instance of StanfordCoreNLP, so if you want to build the jar with maven you'll need to configure maven to have a larger heap size as several models require a fair bit of memory
+Authors
+-------
+John Conwell (original author)
+Paul Landes
