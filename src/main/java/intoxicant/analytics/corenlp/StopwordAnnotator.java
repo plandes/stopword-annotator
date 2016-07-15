@@ -7,8 +7,8 @@ import java.util.Set;
 
 import edu.stanford.nlp.ling.CoreAnnotation;
 import edu.stanford.nlp.pipeline.Annotator;
-import org.apache.lucene.analysis.CharArraySet;
-import org.apache.lucene.analysis.StopAnalyzer;
+import org.apache.lucene.analysis.util.CharArraySet;
+import org.apache.lucene.analysis.core.StopAnalyzer;
 import org.apache.lucene.util.Version;
 
 import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
