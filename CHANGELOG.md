@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.2] 2017-02-02
 ### Changed
 - Upgrade to Stanford CoreNLP 3.7
-- Default to always add lemma stopword to simplify
+- Default to always add lemma stopword to simplify.
+- Bug fix (typeo): lemma never made it as an annotation (only word twice).
 
 ## [2.1] 2016-07-15
 ### Changed
