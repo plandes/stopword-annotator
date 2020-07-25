@@ -78,7 +78,7 @@ public class StopwordAnnotator implements Annotator, CoreAnnotation<Pair<Boolean
 
     @Override
     public Set<Class<? extends CoreAnnotation>> requirementsSatisfied() {
-        return Collections.singleton(intoxicant.analytics.corenlp.StopwordAnnotator.class);
+        return Collections.singleton(StopwordAnnotator.class);
     }
 
     @Override
