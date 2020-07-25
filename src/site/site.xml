@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Maven">
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.5</version>
+    </skin>
+
+    <body>
+        <links>
+            <item name="Source" href="https://github.com/plandes/stopword-annotator"/>
+        </links>
+
+        <menu name="Quick Start">
+            <item name="Introduction" href="README.html"/>
+            <item name="Javadoc" href="apidocs/index.html"/>
+        </menu>
+        <menu ref="reports"/>
+    </body>
+</project>

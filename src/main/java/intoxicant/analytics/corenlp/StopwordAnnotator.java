@@ -1,24 +1,26 @@
-package intoxicant.analytics.coreNlp;
+package intoxicant.analytics.corenlp;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.Arrays;
 
 import edu.stanford.nlp.ling.CoreAnnotation;
 import edu.stanford.nlp.pipeline.Annotator;
-import org.apache.lucene.analysis.CharArraySet;
-import org.apache.lucene.analysis.StopAnalyzer;
+import org.apache.lucene.analysis.util.CharArraySet;
+import org.apache.lucene.analysis.core.StopAnalyzer;
 import org.apache.lucene.util.Version;
 
-import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
-import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.ling.*;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.util.Pair;
+import edu.stanford.nlp.util.ArraySet;
 
 /**
- * User: jconwell
  * CoreNlp Annotator that checks if in coming token is a stopword
+ * @author John Conwell
+ * @author Paul Landes
  */
 public class StopwordAnnotator implements Annotator, CoreAnnotation<Pair<Boolean, Boolean>> {
 
@@ -26,9 +28,6 @@ public class StopwordAnnotator implements Annotator, CoreAnnotation<Pair<Boolean
      * stopword annotator class name used in annotators property
      */
     public static final String ANNOTATOR_CLASS = "stopword";
-
-    public static final String STANFORD_STOPWORD = ANNOTATOR_CLASS;
-    public static final Requirement STOPWORD_REQUIREMENT = new Requirement(STANFORD_STOPWORD);
 
     /**
      * Property key to specify the comma delimited list of custom stopwords
@@ -40,23 +39,22 @@ public class StopwordAnnotator implements Annotator, CoreAnnotation<Pair<Boolean
      */
     public static final String IGNORE_STOPWORD_CASE = "ignore-stopword-case";
 
-    /**
-     * Property key to specify of StopwordAnnotator should check word lemma as stopword
-     */
-    public static final String CHECK_LEMMA = "check-lemma";
-
     private static Class<? extends Pair> boolPair = Pair.makePair(true, true).getClass();
 
     private Properties props;
     private CharArraySet stopwords;
-    private boolean checkLemma;
 
-    public StopwordAnnotator(String annotatorClass, Properties props) {
+    public StopwordAnnotator() {
+	this(new Properties());
+    }
+
+    public StopwordAnnotator(String notUsed, Properties props) {
+	this(props);
+    }
+    public StopwordAnnotator(Properties props) {
         this.props = props;
 
-        this.checkLemma = Boolean.parseBoolean(props.getProperty(CHECK_LEMMA, "false"));
         boolean ignoreCase = Boolean.parseBoolean(props.getProperty(IGNORE_STOPWORD_CASE, "false"));
-
         if (this.props.containsKey(STOPWORDS_LIST)) {
             String stopwordList = props.getProperty(STOPWORDS_LIST);
             this.stopwords = getStopWordList(Version.LUCENE_36, stopwordList, ignoreCase);
@@ -67,11 +65,11 @@ public class StopwordAnnotator implements Annotator, CoreAnnotation<Pair<Boolean
 
     @Override
     public void annotate(Annotation annotation) {
-        if (stopwords != null && stopwords.size() > 0 && annotation.containsKey(TokensAnnotation.class)) {
-            List<CoreLabel> tokens = annotation.get(TokensAnnotation.class);
+        if (stopwords != null && stopwords.size() > 0 && annotation.containsKey(CoreAnnotations.TokensAnnotation.class)) {
+            List<CoreLabel> tokens = annotation.get(CoreAnnotations.TokensAnnotation.class);
             for (CoreLabel token : tokens) {
                 boolean isWordStopword = stopwords.contains(token.word());
-                boolean isLemmaStopword = checkLemma && stopwords.contains(token.word());
+                boolean isLemmaStopword = stopwords.contains(token.lemma());
                 Pair<Boolean, Boolean> pair = Pair.makePair(isWordStopword, isLemmaStopword);
                 token.set(StopwordAnnotator.class, pair);
             }
@@ -79,18 +77,18 @@ public class StopwordAnnotator implements Annotator, CoreAnnotation<Pair<Boolean
     }
 
     @Override
-    public Set<Requirement> requirementsSatisfied() {
-        return Collections.singleton(STOPWORD_REQUIREMENT);
+    public Set<Class<? extends CoreAnnotation>> requirementsSatisfied() {
+        return Collections.singleton(intoxicant.analytics.corenlp.StopwordAnnotator.class);
     }
 
     @Override
-    public Set<Requirement> requires() {
-        if (checkLemma) {
-            return TOKENIZE_SSPLIT_POS_LEMMA;
-        }
-        else {
-            return TOKENIZE_AND_SSPLIT;
-        }
+    public Set<Class<? extends CoreAnnotation>> requires() {
+	return Collections.unmodifiableSet(new ArraySet<>(Arrays.asList(
+	    CoreAnnotations.TextAnnotation.class,
+	    CoreAnnotations.TokensAnnotation.class,
+            CoreAnnotations.LemmaAnnotation.class,
+            CoreAnnotations.PartOfSpeechAnnotation.class
+	)));
     }
 
     @Override
